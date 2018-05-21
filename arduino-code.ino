@@ -3,11 +3,11 @@ Working well for all 6 pots
 buttons working ok but could be improved
 
 Analog Controller firmware V 1.0 by Andre Bandarra
-Use with arduino pro micro
+Use with Arduino Pro Micro
 Based on analog read, evan kale's multiMap funtion for log-to-linar and joystick library
 for assigning channels
 
-Youtube video: https://www.youtube.com/watch?v=JNC-p1kS4yc
+YouTube video: https://youtu.be/JNC-p1kS4yc
 Detailed How-to: https://makershare.com/projects/diy-game-controller
 
 */
@@ -66,21 +66,21 @@ byte potToMapSize;
 
 void setup() {
 
-// Initialize Joystick Library
-Joystick.begin();
+  // Initialize Joystick Library
+  Joystick.begin();
 
-// Initialize Button Pins
-pinMode(8, INPUT_PULLUP);
-pinMode(9, INPUT_PULLUP);
-pinMode(10, INPUT_PULLUP);
+  // Initialize Button Pins
+  pinMode(8, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
 
-//map tranforms?
-slider1FromMapSize = sizeof(slider1FromMap) / sizeof(int);
-slider3FromMapSize = sizeof(slider3FromMap) / sizeof(int);
-pot1FromMapSize = sizeof(pot1FromMap) / sizeof(int);
+  //map tranforms?
+  slider1FromMapSize = sizeof(slider1FromMap) / sizeof(int);
+  slider3FromMapSize = sizeof(slider3FromMap) / sizeof(int);
+  pot1FromMapSize = sizeof(pot1FromMap) / sizeof(int);
 
-sliderToMapSize = sizeof(sliderToMap) / sizeof(int);
-potToMapSize = sizeof(potToMap) / sizeof(int);
+  sliderToMapSize = sizeof(sliderToMap) / sizeof(int);
+  potToMapSize = sizeof(potToMap) / sizeof(int);
 
 }
 
@@ -93,32 +93,32 @@ int lastButtonState[3] = {0,0,0};
 
 void loop() {
 
-slider1Val = analogRead(slider1Pin);
-slider2Val = analogRead(slider2Pin);
-slider3Val = analogRead(slider3Pin);
-slider4Val = analogRead(slider4Pin);
-pot1Val = analogRead(pot1Pin);
-pot2Val = analogRead(pot2Pin);
+  slider1Val = analogRead(slider1Pin);
+  slider2Val = analogRead(slider2Pin);
+  slider3Val = analogRead(slider3Pin);
+  slider4Val = analogRead(slider4Pin);
+  pot1Val = analogRead(pot1Pin);
+  pot2Val = analogRead(pot2Pin);
 
-rightBrake = multiMap(slider1Val, slider1FromMap, slider1FromMapSize, sliderToMap, sliderToMapSize);
-leftBrake = multiMap(slider2Val, slider1FromMap, slider1FromMapSize, sliderToMap, sliderToMapSize);
-rightspeed = multiMap(slider3Val, slider3FromMap, slider3FromMapSize, sliderToMap, sliderToMapSize);
-leftspeed = multiMap(slider4Val, slider3FromMap, slider3FromMapSize, potToMap, potToMapSize);
+  rightBrake = multiMap(slider1Val, slider1FromMap, slider1FromMapSize, sliderToMap, sliderToMapSize);
+  leftBrake = multiMap(slider2Val, slider1FromMap, slider1FromMapSize, sliderToMap, sliderToMapSize);
+  rightspeed = multiMap(slider3Val, slider3FromMap, slider3FromMapSize, sliderToMap, sliderToMapSize);
+  leftspeed = multiMap(slider4Val, slider3FromMap, slider3FromMapSize, potToMap, potToMapSize);
 
-rightpot = multiMap(pot1Val, pot1FromMap, pot1FromMapSize, potToMap, potToMapSize);
-leftpot = multiMap(pot2Val, pot1FromMap, pot1FromMapSize, potToMap, potToMapSize);
+  rightpot = multiMap(pot1Val, pot1FromMap, pot1FromMapSize, potToMap, potToMapSize);
+  leftpot = multiMap(pot2Val, pot1FromMap, pot1FromMapSize, potToMap, potToMapSize);
 
 
-Joystick.setXAxis(leftBrake);
-Joystick.setYAxis(rightBrake);
+  Joystick.setXAxis(leftBrake);
+  Joystick.setYAxis(rightBrake);
 
-Joystick.setZAxis(rightspeed);
-Joystick.setXAxisRotation(leftspeed);
+  Joystick.setZAxis(rightspeed);
+  Joystick.setXAxisRotation(leftspeed);
 
-Joystick.setYAxisRotation(rightpot);
-Joystick.setZAxisRotation(leftpot);
+  Joystick.setYAxisRotation(rightpot);
+  Joystick.setZAxisRotation(leftpot);
 
-for (int index = 0; index < 3; index++)
+  for (int index = 0; index < 3; index++)
   {
     int currentButtonState = !digitalRead(index + pinToButtonMap);
     if (currentButtonState != lastButtonState[index])
@@ -128,7 +128,7 @@ for (int index = 0; index < 3; index++)
     }
   }
 
-delay(50);
+  delay(50);
 }
 
 
